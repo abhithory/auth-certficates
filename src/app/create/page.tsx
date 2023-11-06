@@ -64,7 +64,7 @@ export default function CreateCertificate() {
   return (
     <main className="page_main flex_center flex-col">
       <section className="flex_center page_main flex-col text-center h-full">
-        <h1 className="text_highlight_gradient text_heading_size">Generate your Centificate</h1>
+        <h1 className="text_highlight_gradient text_heading_size">Generate your Certificate</h1>
         <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4 items-center mt-12 xl:w-[40vw] md:w-[80vw] w-[90vw]'>
           <input type="text" placeholder='Your Name' required className='input_1' {...register('recipientName')} />
           {errors?.recipientEmail &&
