@@ -23,8 +23,8 @@ export function Navbar() {
             <span className="flex items-center justify-center gap-4">
 
 
-                <Link href={"/create-certificate"}>
-                    <button className="btn_primary_2" >Create</button>
+                <Link href={"/create"}>
+                    <button className="btn_primary_1" >Create</button>
                 </Link>
 
             </span>

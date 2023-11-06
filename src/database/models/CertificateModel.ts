@@ -6,7 +6,7 @@ const CertificateSchema = new Schema({
     certificateNumber: {
         type: String,
         unique: [true, 'Certificate Number already exists!'],
-        required: [true, 'Certificate Number is required!'],
+        default: uuidv4
     },
     recipientName: {
         type: String,
@@ -26,14 +26,17 @@ const CertificateSchema = new Schema({
     },
 });
 
-CertificateSchema.pre('save', async function (next) {
-    if (!this.isNew) {
-        return next();
-    }
-    const generatedCertificateNumber = uuidv4();
-    this.certificateNumber = String(generatedCertificateNumber).toLowerCase();
-    next();
-});
+// CertificateSchema.pre('save', async function (next) {
+//     console.log("isNew", this.isNew);
+
+//     if (!this.isNew) {
+//         return next();
+//     }
+//     const generatedCertificateNumber = uuidv4();
+//     this.certificateNumber = String(generatedCertificateNumber).toLowerCase();
+//     console.log("generatedCertificateNumber", generatedCertificateNumber);
+//     next();
+// });
 
 const Certificate = models.Certificate || model('Certificate', CertificateSchema);
 

@@ -1,9 +1,11 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import '@/styles/globals.css'
-import { Navbar } from '@/components/Navbar'
 
-const inter = Inter({ subsets: ['latin'] })
+import { Navbar } from '@/components/Navbar'
+import { ToastContainer } from 'react-toastify';
+
+import '@/styles/globals.css'
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -18,10 +20,11 @@ export default function RootLayout({
   return (
     <html lang="en">
 
-      <body className={`${inter.className} bg-primary-bg`}>
+      <body className={`bg-primary-bg text-text-color`}>
         <Navbar />
 
         {children}
+        <ToastContainer />
       </body>
     </html>
   )

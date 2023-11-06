@@ -1,58 +1,89 @@
+"use client"
+
 import Image from 'next/image'
 import { useForm, SubmitHandler } from "react-hook-form"
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { z } from 'zod'
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createCertificateZSchema } from '@/utils/zSchema/CertificateValidations';
+
+import { toast } from 'react-toastify';
+import { OneCertificate } from '@/utils/types/Certificate';
+import { useState } from 'react';
+import Link from 'next/link';
+
 
 type CreateCertificateType = z.infer<typeof createCertificateZSchema>
 
 
 export default function CreateCertificate() {
 
+
   const {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors, isValid, isValidating },
   } = useForm<CreateCertificateType>({
     resolver: zodResolver(createCertificateZSchema)
   })
 
+  const [createdCertificate, setCreatedCertificate] = useState<OneCertificate>();
+
   const onSubmit: SubmitHandler<CreateCertificateType> = async (data) => {
     console.log("data", data)
-    const createdCertifcate = await axios.post("/api/create-certificate", {
-      body: data
-    })
-    console.log("createdCertifcate", createdCertifcate);
+
+    try {
+
+      const createdCertifcate = await axios.post("/api/certificate", {
+        body: data
+      })
+      console.log("createdCertifcate", createdCertifcate);
+
+      toast.success("Certificate Created Succefully");
+      setCreatedCertificate(createdCertifcate?.data?.data)
+      reset()
+    } catch (error: any) {
+      console.log(error);
+
+      toast.error((error)?.response?.data?.message)
+    }
   }
 
-
-  console.log(watch("recipientEmail"))
 
   return (
     <main className="page_main flex_center flex-col">
       <section className="flex_center page_main flex-col text-center h-full">
-        <h1 className="text_highlight_gradient text_sub_heading_size">Genertate your Centificate</h1>
-        <h1 className="text_primary_gradient text_big_heading_size">Protect Your Data</h1>
-        <h1 className="md:mt-4  text_heading_size">with <span className='text_primary_gradient_2'>DataVault</span></h1>
-        <p className='w-9/12 md:w-8/12 lg:w-7/12 xl:w-6/12 text-center mt-8'>DataVault is your secure and private solution for storing passwords and files on the blockchain. Our decentralized application (Dapp) combines encryption technology with the power of blockchain to ensure your data remains safe from unauthorized access.</p>
+        <h1 className="text_highlight_gradient text_sub_heading_size">Get your Centificate</h1>
         <div className="mt-14 ">
           <form onSubmit={handleSubmit(onSubmit)}>
             <input type="text" placeholder='Your Name' required className='input_1' {...register('recipientName')} />
             {errors?.recipientEmail &&
               <p>{errors?.recipientEmail?.message}</p>
             }
-            <input type="text" placeholder='Enter your email' required className='input_1' {...register('recipientEmail')} />
+            <input type="email" placeholder='Enter your email' required className='input_1' {...register('recipientEmail')} />
             {errors?.recipientEmail &&
               <p>{errors?.recipientEmail?.message}</p>
             }
-            <button className="btn_primary" type='submit'>
+            <button disabled={!isValid} className={`btn_primary_${isValid ? "1" : "2"}`} type='submit'>
               generate centificate Cetificate
             </button>
           </form>
         </div>
+
+        {createdCertificate &&
+          <div className="mt-12">
+
+            <p>your Certificate Number: {createdCertificate?.certificateNumber}</p>
+            <Link href={"/certificate/" + createdCertificate.certificateNumber} target="_blank">
+              <button className={`btn_primary_1`}>
+                Download Your Certificate
+              </button>
+            </Link>
+          </div>
+        }
       </section>
     </main>
   )
