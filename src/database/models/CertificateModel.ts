@@ -5,8 +5,8 @@ import { v4 as uuidv4 } from 'uuid';
 const CertificateSchema = new Schema({
     certificateNumber: {
         type: String,
-        unique: true,
-        required: true,
+        unique: [true, 'Certificate Number already exists!'],
+        required: [true, 'Certificate Number is required!'],
     },
     recipientName: {
         type: String,
@@ -16,9 +16,14 @@ const CertificateSchema = new Schema({
         unique: [true, 'Email already exists!'],
         required: [true, 'Email is required!'],
     },
-    image: {
-        type: String,
-    }
+    nftMinted: {
+        type: Boolean,
+        default: false
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
 });
 
 CertificateSchema.pre('save', async function (next) {
@@ -26,7 +31,7 @@ CertificateSchema.pre('save', async function (next) {
         return next();
     }
     const generatedCertificateNumber = uuidv4();
-    this.certificateNumber = generatedCertificateNumber;
+    this.certificateNumber = String(generatedCertificateNumber).toLowerCase();
     next();
 });
 
