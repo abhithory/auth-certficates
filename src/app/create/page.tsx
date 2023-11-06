@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 import { OneCertificate } from '@/utils/types/Certificate';
 import { useState } from 'react';
 import Link from 'next/link';
+import { NormalButton } from '@/components/Button/NormalButton';
 
 
 type CreateCertificateType = z.infer<typeof createCertificateZSchema>
@@ -25,30 +26,36 @@ export default function CreateCertificate() {
     handleSubmit,
     watch,
     reset,
-    formState: { errors, isValid, isValidating },
+    formState: { errors, isValid },
   } = useForm<CreateCertificateType>({
     resolver: zodResolver(createCertificateZSchema)
   })
 
   const [createdCertificate, setCreatedCertificate] = useState<OneCertificate>();
+  const [creatingCertificate, setCreatingCertificate] = useState(false);
 
   const onSubmit: SubmitHandler<CreateCertificateType> = async (data) => {
     console.log("data", data)
 
     try {
-
+      setCreatingCertificate(true);
       const createdCertifcate = await axios.post("/api/certificate", {
         body: data
       })
-      console.log("createdCertifcate", createdCertifcate);
-
-      toast.success("Certificate Created Succefully");
+      if (createdCertifcate.status === 201) {
+        toast.success("Certificate Created Succefully");
+      } else {
+        toast.info("Certificate Already created with this email");
+      }
       setCreatedCertificate(createdCertifcate?.data?.data)
       reset()
     } catch (error: any) {
       console.log(error);
 
       toast.error((error)?.response?.data?.message)
+
+    } finally {
+      setCreatingCertificate(false);
     }
   }
 
@@ -58,7 +65,7 @@ export default function CreateCertificate() {
       <section className="flex_center page_main flex-col text-center h-full">
         <h1 className="text_highlight_gradient text_sub_heading_size">Get your Centificate</h1>
         <div className="mt-14 ">
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} className='d-flex flex-col gap-4'>
             <input type="text" placeholder='Your Name' required className='input_1' {...register('recipientName')} />
             {errors?.recipientEmail &&
               <p>{errors?.recipientEmail?.message}</p>
@@ -67,9 +74,9 @@ export default function CreateCertificate() {
             {errors?.recipientEmail &&
               <p>{errors?.recipientEmail?.message}</p>
             }
-            <button disabled={!isValid} className={`btn_primary_${isValid ? "1" : "2"}`} type='submit'>
-              generate centificate Cetificate
-            </button>
+            <NormalButton loading={creatingCertificate} disabled={!isValid || creatingCertificate} className={`btn_primary_${isValid ? "1" : "2"}`} type='submit'>
+              Generate Cetificate
+            </NormalButton>
           </form>
         </div>
 

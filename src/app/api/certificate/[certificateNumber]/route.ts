@@ -8,6 +8,7 @@ export async function GET(req: NextRequest, { params }: { params: any }) {
         await connectToDb();
 
         const validation = getCertificateZSchema.safeParse(params);
+        console.log(params);
         if (!validation?.success) {
             return NextResponse.json({ status: false, message: validation.error.errors }, { status: 400 })
         }

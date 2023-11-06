@@ -10,6 +10,13 @@ import { useState } from "react";
 import { OneCertificate } from "@/utils/types/Certificate";
 import PopUpModal from "@/components/Modal/PopUpModal";
 
+import { toast } from 'react-toastify';
+import { formatDateTime } from "@/utils/helpers/dates";
+import Link from "next/link";
+import { NormalButton } from "@/components/Button/NormalButton";
+import ShareCertificateButtons from "@/components/ShareCertificate/ShareCertificate";
+
+
 type GetCertificateType = z.infer<typeof getCertificateZSchema>
 
 export default function Home() {
@@ -25,82 +32,60 @@ export default function Home() {
 
   // TODO: define cer
   const [certificateDetails, setCertificateDetails] = useState<OneCertificate>();
+  const [loadingCertificate, setLoadingCertificate] = useState(false);
 
 
   const onSubmit: SubmitHandler<GetCertificateType> = async (data) => {
     console.log("data", data)
-    const createdCertifcate = await axios.get(`/api/certificate/${data?.certificateNumber}`)
-    console.log("generated", createdCertifcate);
-    setCertificateDetails(createdCertifcate?.data as OneCertificate);
+    try {
+      setLoadingCertificate(true)
+      const createdCertifcate = await axios.get(`/api/certificate/${data?.certificateNumber}`)
+      console.log("generated", createdCertifcate);
+      setCertificateDetails(createdCertifcate?.data?.data as OneCertificate);
+    } catch (error: any) {
+      console.log(error);
+      const errorData = (error)?.response?.data?.message
+
+      toast.error(typeof errorData === "string" ? errorData : "Enter Valid Data. Something unexpted in backend")
+    } finally {
+      setLoadingCertificate(false)
+    }
   }
 
 
-  console.log("certificateNumber", watch("certificateNumber"))
-
-
-  function shareOnLinkedIn(title: string, url: string) {
-    const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`;
-    window.open(linkedInShareUrl, '_blank');
-  }
-
-  function shareOnTwitter(text: string, url: string) {
-    const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
-    window.open(twitterShareUrl, '_blank');
-  }
 
 
   return (
     <main className="page_main flex_center flex-col">
       <section className="flex_center page_main flex-col text-center h-full">
-        <h1 className="text_highlight_gradient text_sub_heading_size">Genertate your Centificate</h1>
-        <h1 className="md:mt-4  text_heading_size">with <span className='text_primary_gradient_2'>DataVault</span></h1>
+        <h1 className="text_highlight_gradient text_sub_heading_size">Verify Certificate</h1>
         <div className="mt-14 ">
           <form onSubmit={handleSubmit(onSubmit)}>
             <input type="text" placeholder='Enter Centificate Number' className='input_1' {...register("certificateNumber")} />
-            <button className="btn_primary_1" type="submit" >
+            <NormalButton className="btn_primary_1" type="submit" loading={loadingCertificate} disabled={loadingCertificate}>
               Get Cetificate
-            </button>
+            </NormalButton>
           </form>
         </div>
 
         {certificateDetails &&
           <div className="">
-            <h2>Share Certificate:</h2>
-            <div className="d-flex items-center justify-center">
-              <button className="btn_primary" type="submit"
-                onClick={() => {
-                  shareOnLinkedIn(window.location.href + "/certificate" + certificateDetails?.certificateNumber, "Checkout my latest certificate")
-                }}
-              >
-                Linked
-              </button>
-              <button className="btn_primary" type="submit"
-                onClick={() => {
-                  shareOnTwitter(window.location.href + "/certificate" + certificateDetails?.certificateNumber, "Checkout my latest certificate: ")
-                }}
-              >
-                Twitter
-              </button>
+            <div className="">
+              <p>Certificate issued for: {certificateDetails?.recipientName}</p>
+              <p>Certificate issued for email: {certificateDetails?.recipientEmail}</p>
+              <p>Certificate issued at: {formatDateTime(certificateDetails?.createdAt)}</p>
             </div>
-            {/* <button className="btn_primary" type="submit" >
-              Add certificate to your linked account
-            </button> */}
-            <button className="btn_primary" type="submit" >
-              Mint NFT soon...
-            </button>
+            <div className="">
+              <Link href={"/certificate/" + certificateDetails.certificateNumber} target="_blank">
+                <NormalButton className={`btn_primary_1`}>
+                  View Certificate
+                </NormalButton>
+              </Link>
+            </div>
+            <h2>Share Certificate:</h2>
+            <ShareCertificateButtons certificateDetails={certificateDetails} />
           </div>
         }
-
-        <PopUpModal isOpen={!!certificateDetails} closeModal={() => {
-
-        }}>
-          <div className="">
-            <p>Certificate issued for: {certificateDetails?.recipientName}</p>
-            <p>Certificate issued for email: {certificateDetails?.recipientEmail}</p>
-            <p>Certificate issued at: {certificateDetails?.createdAt}</p>
-            <p>Certificate Number: {certificateDetails?.certificateNumber}</p>
-          </div>
-        </PopUpModal>
 
       </section>
     </main>
