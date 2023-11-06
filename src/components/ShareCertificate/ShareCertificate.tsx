@@ -9,7 +9,7 @@ type ShareCertificateButtonsProps = {
 
 export default function ShareCertificateButtons({ certificateDetails }: ShareCertificateButtonsProps) {
     const shareCertificateButtonsContent = "🏆 Proud recipient of Live Full Stack Open Source Cohort! 🎓 This certificate represents dedication, hard work, and a commitment to excellence 🙏 #Certification #Success #Achievement.";
-    const certificateUrl = window.location.href + "/certificate" + certificateDetails?.certificateNumber;
+    const certificateUrl = window.location.href + "/certificate/" + certificateDetails?.certificateNumber;
 
 
 
