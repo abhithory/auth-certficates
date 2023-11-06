@@ -1,12 +1,18 @@
 "use client"
 import React from 'react'
 
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 
 export function Navbar() {
     const router = useRouter();
+
+    const pathname = usePathname();
+
+    if (pathname.startsWith("/certificate/")) {
+        return <></>
+    }
 
     return (
         <nav className="w-full flex justify-between  py-4 h-[12vh] xl:px-20 md:px-14 px-8">
