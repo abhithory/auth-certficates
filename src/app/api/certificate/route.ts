@@ -1,6 +1,6 @@
 import { connectToDb } from '@/database/connect';
 import Certificate from '@/database/models/CertificateModel';
-import { createCertificateZSchema } from '@/zSchema/Certificate';
+import { createCertificateZSchema } from '@/utils/zSchema/CertificateValidations';
 import { NextRequest, NextResponse } from 'next/server'
 
 

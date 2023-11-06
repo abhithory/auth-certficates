@@ -4,7 +4,7 @@ import axios from 'axios';
 import { z } from 'zod'
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { createCertificateZSchema } from '@/zSchema/Certificate';
+import { createCertificateZSchema } from '@/utils/zSchema/CertificateValidations';
 
 type CreateCertificateType = z.infer<typeof createCertificateZSchema>
 
