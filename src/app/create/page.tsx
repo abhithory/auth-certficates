@@ -13,6 +13,7 @@ import { OneCertificate } from '@/utils/types/Certificate';
 import { useState } from 'react';
 import Link from 'next/link';
 import { NormalButton } from '@/components/Button/NormalButton';
+import ShareCertificateButtons from '@/components/ShareCertificate/ShareCertificate';
 
 
 type CreateCertificateType = z.infer<typeof createCertificateZSchema>
@@ -63,33 +64,38 @@ export default function CreateCertificate() {
   return (
     <main className="page_main flex_center flex-col">
       <section className="flex_center page_main flex-col text-center h-full">
-        <h1 className="text_highlight_gradient text_sub_heading_size">Get your Centificate</h1>
-        <div className="mt-14 ">
-          <form onSubmit={handleSubmit(onSubmit)} className='d-flex flex-col gap-4'>
-            <input type="text" placeholder='Your Name' required className='input_1' {...register('recipientName')} />
-            {errors?.recipientEmail &&
-              <p>{errors?.recipientEmail?.message}</p>
-            }
-            <input type="email" placeholder='Enter your email' required className='input_1' {...register('recipientEmail')} />
-            {errors?.recipientEmail &&
-              <p>{errors?.recipientEmail?.message}</p>
-            }
-            <NormalButton loading={creatingCertificate} disabled={!isValid || creatingCertificate} className={`btn_primary_${isValid ? "1" : "2"}`} type='submit'>
-              Generate Cetificate
-            </NormalButton>
-          </form>
-        </div>
+        <h1 className="text_highlight_gradient text_heading_size">Generate your Centificate</h1>
+        <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4 items-center mt-12 xl:w-[40vw] md:w-[80vw] w-[90vw]'>
+          <input type="text" placeholder='Your Name' required className='input_1' {...register('recipientName')} />
+          {errors?.recipientEmail &&
+            <p>{errors?.recipientEmail?.message}</p>
+          }
+          <input type="email" placeholder='Enter your email' required className='input_1' {...register('recipientEmail')} />
+          {errors?.recipientEmail &&
+            <p>{errors?.recipientEmail?.message}</p>
+          }
+          <NormalButton loading={creatingCertificate} disabled={!isValid || creatingCertificate} className={`btn_primary_${isValid ? "1" : "2"}`} type='submit'>
+            Generate Cetificate
+          </NormalButton>
+        </form>
 
         {createdCertificate &&
-          <div className="mt-12">
+          <>
+            <div className="mt-12">
+              <p>Your Certificate Number: {createdCertificate?.certificateNumber}</p>
+              <Link href={"/certificate/" + createdCertificate.certificateNumber} target="_blank">
+                <button className={`btn_primary_1`}>
+                  Download Your Certificate
+                </button>
+              </Link>
 
-            <p>your Certificate Number: {createdCertificate?.certificateNumber}</p>
-            <Link href={"/certificate/" + createdCertificate.certificateNumber} target="_blank">
-              <button className={`btn_primary_1`}>
-                Download Your Certificate
-              </button>
-            </Link>
-          </div>
+            </div>
+            <div className="mt-8">
+              <h1 className="text_highlight_gradient text_sub_heading_size mb-2">Share Certificate</h1>
+
+              <ShareCertificateButtons certificateDetails={createdCertificate} />
+            </div>
+          </>
         }
       </section>
     </main>

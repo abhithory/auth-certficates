@@ -26,6 +26,7 @@ export default function Home() {
     handleSubmit,
     watch,
     formState: { errors, isValid, isValidating },
+    reset
   } = useForm<GetCertificateType>({
     resolver: zodResolver(getCertificateZSchema)
   })
@@ -42,6 +43,7 @@ export default function Home() {
       const createdCertifcate = await axios.get(`/api/certificate/${data?.certificateNumber}`)
       console.log("generated", createdCertifcate);
       setCertificateDetails(createdCertifcate?.data?.data as OneCertificate);
+      reset()
     } catch (error: any) {
       console.log(error);
       const errorData = (error)?.response?.data?.message
@@ -58,32 +60,36 @@ export default function Home() {
   return (
     <main className="page_main flex_center flex-col">
       <section className="flex_center page_main flex-col text-center h-full">
-        <h1 className="text_highlight_gradient text_sub_heading_size">Verify Certificate</h1>
+        <h1 className="text_highlight_gradient text_heading_size">Verify Certificate</h1>
         <div className="mt-14 ">
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4 items-center mt-12 xl:w-[40vw] md:w-[80vw] w-[90vw]'>
             <input type="text" placeholder='Enter Centificate Number' className='input_1' {...register("certificateNumber")} />
-            <NormalButton className="btn_primary_1" type="submit" loading={loadingCertificate} disabled={loadingCertificate}>
+            <NormalButton loading={loadingCertificate} disabled={!isValid || loadingCertificate} className={`btn_primary_${isValid ? "1" : "2"}`} type='submit'>
               Get Cetificate
             </NormalButton>
           </form>
         </div>
 
         {certificateDetails &&
-          <div className="">
+          <div className="mt-12">
             <div className="">
-              <p>Certificate issued for: {certificateDetails?.recipientName}</p>
-              <p>Certificate issued for email: {certificateDetails?.recipientEmail}</p>
-              <p>Certificate issued at: {formatDateTime(certificateDetails?.createdAt)}</p>
+              <p className="text_sub_heading_size">Recipient Name:<span className="text_highlight_gradient  font-bold"> {certificateDetails?.recipientName} </span> </p>
+              <p className="text_sub_heading_size">Recipient Email:: <span className="text_highlight_gradient  font-bold">{certificateDetails?.recipientEmail}</span></p>
+              <p className="text_sub_heading_size">Date of Issuance: <span className="text_highlight_gradient  font-bold">{formatDateTime(certificateDetails?.createdAt)} </span></p>
             </div>
-            <div className="">
+            <div className="mt-4">
               <Link href={"/certificate/" + certificateDetails.certificateNumber} target="_blank">
                 <NormalButton className={`btn_primary_1`}>
+
                   View Certificate
                 </NormalButton>
               </Link>
             </div>
-            <h2>Share Certificate:</h2>
-            <ShareCertificateButtons certificateDetails={certificateDetails} />
+            <div className="mt-8">
+              <h1 className="text_sub_heading_size mb-2">Share Certificate</h1>
+
+              <ShareCertificateButtons certificateDetails={certificateDetails} />
+            </div>
           </div>
         }
 

@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { SimpleSpinner } from '@/components/Spinner/SimpleSpinner';
 import { formatDateTime } from '@/utils/helpers/dates';
 import { GenerateCertificate } from '@/components/GenerateCertificate/GenerateCertificate';
+import ShareCertificateButtons from '@/components/ShareCertificate/ShareCertificate';
 
 
 export default function YourCertificatePage() {
@@ -48,6 +49,7 @@ export default function YourCertificatePage() {
                     {certificateDetails &&
                         <div className="flex_center flex-col gap-8 mt-12">
                             <h1 className="text_highlight_gradient text_heading_size">{certificateDetails.recipientName}{"'s"} Certificate</h1>
+
                             <GenerateCertificate certificateDetails={certificateDetails} />
                         </div>
                     }

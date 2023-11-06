@@ -24,7 +24,7 @@ export function Navbar() {
           className='xl:w-24 md:w-16 w-14'
           alt="Picture of the author"
         /> */}
-                <h1 className="text-2xl text-text-color ">Share Certificates</h1>
+                <h1 className="md:text-3xl  text-xl secondary_gradient font-bold ">Certificate Authentication</h1>
             </span>
             <span className="flex items-center justify-center gap-4">
 

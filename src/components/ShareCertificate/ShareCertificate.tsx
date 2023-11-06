@@ -1,14 +1,16 @@
 import { OneCertificate } from '@/utils/types/Certificate'
 import React from 'react'
 import { NormalButton } from '../Button/NormalButton'
+import { toast } from 'react-toastify'
 
 type ShareCertificateButtonsProps = {
     certificateDetails: OneCertificate
 }
 
 export default function ShareCertificateButtons({ certificateDetails }: ShareCertificateButtonsProps) {
-    const shareCertificateButtonsContent = "Checkout my latest certificate:";
+    const shareCertificateButtonsContent = "🏆 Proud recipient of Live Full Stack Open Source Cohort! 🎓 This certificate represents dedication, hard work, and a commitment to excellence 🙏 #Certification #Success #Achievement.";
     const certificateUrl = window.location.href + "/certificate" + certificateDetails?.certificateNumber;
+
 
 
     function shareOnLinkedIn() {
@@ -22,13 +24,13 @@ export default function ShareCertificateButtons({ certificateDetails }: ShareCer
     }
 
     return (
-        <div className="d-flex items-center justify-center">
+        <div className="flex gap-2 items-center justify-center">
             <NormalButton className="btn_primary_2"
                 onClick={() => {
                     shareOnLinkedIn()
                 }}
             >
-                Linked
+                Linkedin
             </NormalButton>
             <NormalButton className="btn_primary_2"
                 onClick={() => {
@@ -40,8 +42,12 @@ export default function ShareCertificateButtons({ certificateDetails }: ShareCer
             {/* <button className="btn_primary" type="submit" >
               Add certificate to your linked account
             </button> */}
-            <NormalButton>
-                Mint NFT soon...
+            <NormalButton className="btn_primary_2"
+                onClick={() => {
+                    toast.info("Soon....")
+                }}
+            >
+                Mint NFT
             </NormalButton>
         </div>
     )
