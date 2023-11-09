@@ -26,6 +26,7 @@ body {
   bottom: 0;
   object-fit: cover;
   z-index: -99;
+  opacity: 0.6;
 }
 
 @media (min-aspect-ratio: 16/9) {
@@ -39,33 +40,6 @@ body {
     width: auto;
     height: 100%;
   }
-}
-
-.bg_gradient_image {
-  position: fixed;
-  top: 10%;
-  left: 0%;
-  width: 50vw;
-  height: 50vh;
-  /* background-position: 50% 10%; */
-  background-repeat: no-repeat;
-  background-size: contain;
-  z-index: -100;
-  opacity: 0.6;
-}
-
-.bg_gradient_image_2 {
-  position: fixed;
-  bottom: 0%;
-  right: 0%;
-  width: 50vw;
-  height: 50vh;
-  /* background-position: 50% 10%; */
-  background-repeat: no-repeat;
-  background-size: cover;
-  z-index: -100;
-  opacity: 0.2;
-  /* border-radius: 40rem; */
 }
 
 @layer base {

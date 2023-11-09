@@ -24,6 +24,8 @@ export default function RootLayout({
     <html lang="en">
 
       <body className={`bg-primary-bg text-text-color`}>
+        <video className="bg-video" src="/background.mp4" autoPlay loop muted></video>
+
         <Navbar />
 
         {children}
