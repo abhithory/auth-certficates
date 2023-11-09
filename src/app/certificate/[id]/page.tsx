@@ -7,8 +7,11 @@ import { useParams } from 'next/navigation'
 import { toast } from 'react-toastify';
 import { SimpleSpinner } from '@/components/Spinner/SimpleSpinner';
 import { formatDateTime } from '@/utils/helpers/dates';
-import { GenerateCertificate } from '@/components/GenerateCertificate/GenerateCertificate';
+// import { GenerateCertificate } from '@/components/GenerateCertificate/GenerateCertificate';
 import ShareCertificateButtons from '@/components/ShareCertificate/ShareCertificate';
+import dynamic from 'next/dynamic';
+
+const GenerateCertificate = dynamic(() => import("@/components/GenerateCertificate/GenerateCertificate").then(data => data.GenerateCertificate), { ssr: false });
 
 
 export default function YourCertificatePage() {

@@ -6,6 +6,9 @@ import { ToastContainer } from 'react-toastify';
 import '@/styles/globals.css'
 import 'react-toastify/dist/ReactToastify.css';
 
+// import '@react-pdf-viewer/core/lib/styles/index.css';
+// import '@react-pdf-viewer/default-layout/lib/styles/index.css';
+
 
 export const metadata: Metadata = {
   title: 'Create Next App',
