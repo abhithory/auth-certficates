@@ -21,7 +21,7 @@ export const apiCreateCertificate = async (certificateData: CreateCertificateTyp
         const createdCertifcate = await axios.post("/api/certificate", {
             body: certificateData
         })
-        return createdCertifcate?.data?.data;
+        return createdCertifcate;
     } catch (error) {
         throw error
     }

@@ -88,7 +88,6 @@ export default function Home() {
               <h1 className="text_sub_heading_size mb-2">Share Certificate</h1>
 
               <ShareCertificateButtons certificateDetails={certificateDetails} />
-              <MintCertificateButton setCertificateDetails={setCertificateDetails} certificateDetails={certificateDetails} />
             </div>
           </div>
         }

@@ -45,6 +45,8 @@ function MintNftModalContent({ certificateDetails, setCertificateDetails }: Mint
             const metadataURI = await uploadMetadataToIPFS(certificateImageUrl);
             setMintingStepCount("3")
             const nftContract = getNftContract();
+            console.log(metadataURI);
+
             const mintNftTx = await nftContract.safeMint(address, metadataURI);
             const updatedCertificate = await apiSetNftMinted(certificateDetails?.certificateNumber);
             setMintingStepCount("4")
@@ -76,7 +78,7 @@ function MintNftModalContent({ certificateDetails, setCertificateDetails }: Mint
     return (
         <div className="" ref={pdfContainer} >
 
-            {certificateDetails?.nftMinted ?
+            {(certificateDetails?.nftMinted && !mintedNftId) ?
                 <p className='text_highlight_gradient
                 '>You have already Minted NFT</p>
                 :

@@ -15,6 +15,7 @@ import Link from 'next/link';
 import { NormalButton } from '@/components/Button/NormalButton';
 import ShareCertificateButtons from '@/components/ShareCertificate/ShareCertificate';
 import { apiCreateCertificate } from '@/apiCalls/certificatesApi';
+import MintCertificateButton from '@/components/NftMintingButton/MintCertificateButton';
 
 
 type CreateCertificateType = z.infer<typeof createCertificateZSchema>
@@ -91,6 +92,12 @@ export default function CreateCertificate() {
               <h1 className="text_highlight_gradient text_sub_heading_size mb-2">Share Certificate</h1>
 
               <ShareCertificateButtons certificateDetails={createdCertificate} />
+
+              <div className="mt-4">
+
+                <MintCertificateButton setCertificateDetails={setCreatedCertificate} certificateDetails={createdCertificate} />
+              </div>
+
             </div>
           </>
         }

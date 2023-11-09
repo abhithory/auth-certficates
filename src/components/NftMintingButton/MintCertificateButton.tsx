@@ -11,21 +11,28 @@ import { OneCertificate } from '@/utils/types/Certificate';
 type MintCertificateButtonsProps = {
     certificateDetails: OneCertificate,
     setCertificateDetails: (certificate: OneCertificate) => void;
+    className?: string;
 }
 
-export default function MintCertificateButton({ certificateDetails, setCertificateDetails }: MintCertificateButtonsProps) {
+export default function MintCertificateButton({ certificateDetails, setCertificateDetails, className }: MintCertificateButtonsProps) {
     const [showMintNftModal, setShowMintNftModal] = useState(false);
 
-    const thirdWebClientId = process.env.THIRD_WEB_CLIENT_ID;
+    const thirdWebClientId = process.env.NEXT_PUBLIC_THIRD_WEB_CLIENT_ID || "";
 
     return (
         <>
-            <NormalButton className="btn_primary_2"
+            <NormalButton className={`btn_secondary_2`}
                 onClick={() => {
-                    setShowMintNftModal(true)
+                    if (!certificateDetails.nftMinted) {
+                        setShowMintNftModal(true)
+                    }
                 }}
             >
-                Mint NFT
+                {certificateDetails.nftMinted ?
+                    "NFT Already Minted"
+                    :
+                    "Mint Certificate as NFT"
+                }
             </NormalButton>
             <PopUpModal isOpen={showMintNftModal} closeModal={() => setShowMintNftModal(false)}>
                 <ThirdwebProvider activeChain={Mumbai}

@@ -21,11 +21,14 @@ export default function useMintNft() {
 
 
     const uploadMetadataToIPFS = async (imageUrl: string) => {
+
         const metadataURI = await storage?.upload({
             "name": "Certificate of Completing Cohort",
             "description": "this certificate is given to this user on completing Cohort",
             "image": imageUrl,
         });
+
+
         return metadataURI
     }
 

@@ -97,6 +97,20 @@ body {
     xl:text-xl xl:px-8 xl:py-3 xl:gap-2;
   }
 
+  .btn_secondary {
+    @apply text-text-color bg-highlight border-2 border-highlight rounded-xl  text-center inline-flex items-center transition-colors
+    text-sm px-4 py-2 gap-1
+    md:text-base md:px-6 md:py-2.5 md:gap-1.5
+    xl:text-xl xl:px-8 xl:py-3 xl:gap-2;
+  }
+
+  .btn_secondary_2 {
+    @apply text-text-color bg-transparent hover:bg-highlight border-2 border-highlight rounded-xl  text-center inline-flex items-center transition-colors
+    text-sm px-4 py-2 gap-1
+    md:text-base md:px-6 md:py-2.5 md:gap-1.5
+    xl:text-xl xl:px-8 xl:py-3 xl:gap-2;
+  }
+
   .btn_sidebar {
     @apply text-text-color bg-transparent hover:bg-primary-hover rounded-md text-base px-6 py-2 text-center inline-flex items-center gap-2 transition-colors w-full;
   }

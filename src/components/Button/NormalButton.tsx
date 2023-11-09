@@ -11,7 +11,7 @@ interface IProps extends React.HTMLProps<HTMLButtonElement> {
 
 export function NormalButton({ className, children, loading = false, icon, ...rest }: IProps) {
     return (
-        <button className={`btn_primary_1 ${className}`} disabled={loading} {...rest}>
+        <button className={`${className ? className : "btn_primary_1"}`} disabled={loading} {...rest}>
             {loading ? (
                 <SimpleSpinner className='w-5 h-5 text-primary' />
             ) : (
