@@ -6,21 +6,21 @@ import { ConnectWallet } from "@thirdweb-dev/react";
 import { useAddress } from "@thirdweb-dev/react";
 import { NormalButton } from '../Button/NormalButton';
 import { useGenerateCertificate } from '@/hooks/useGenerateCertificate';
-import { SimpleSpinner } from '../Spinner/SimpleSpinner';
-import Image from 'next/image';
 import useMintNft from '@/hooks/useMintNft';
+import { apiSetNftMinted } from '@/apiCalls/certificatesApi';
 
 
 
 type MintNftModalContentProps = {
-    certificateDetails: OneCertificate
+    certificateDetails: OneCertificate,
+    setCertificateDetails: (certificate: OneCertificate) => void;
 }
 
 
-function MintNftModalContent({ certificateDetails }: MintNftModalContentProps) {
+function MintNftModalContent({ certificateDetails, setCertificateDetails }: MintNftModalContentProps) {
     const address = useAddress();
 
-    const { certificatePdfUrl, generateCertificateImage } = useGenerateCertificate({ certificateDetails });
+    const { generateCertificateImage } = useGenerateCertificate({ certificateDetails });
     const { uploadMetadataToIPFS, getNftContract } = useMintNft()
 
     const [mintingNFT, setMintingNFT] = useState(false);
@@ -46,14 +46,13 @@ function MintNftModalContent({ certificateDetails }: MintNftModalContentProps) {
             setMintingStepCount("3")
             const nftContract = getNftContract();
             const mintNftTx = await nftContract.safeMint(address, metadataURI);
+            const updatedCertificate = await apiSetNftMinted(certificateDetails?.certificateNumber);
             setMintingStepCount("4")
             const receipt = await mintNftTx.wait();
-
             const nftId = String(receipt?.events[0]?.args?.tokenId);
             setMintedNftId(nftId)
-
-            console.log("Minted NFT: ", nftId);
             setMintingStepCount("5")
+            setCertificateDetails(updatedCertificate);
         } catch (error) {
             setMintingStepCount("-1")
 

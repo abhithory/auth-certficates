@@ -10,6 +10,7 @@ import { formatDateTime } from '@/utils/helpers/dates';
 // import { GenerateCertificate } from '@/components/GenerateCertificate/GenerateCertificate';
 import ShareCertificateButtons from '@/components/ShareCertificate/ShareCertificate';
 import dynamic from 'next/dynamic';
+import { apiLoadCertificateWithNumer } from '@/apiCalls/certificatesApi';
 
 const GenerateCertificate = dynamic(() => import("@/components/GenerateCertificate/GenerateCertificate").then(data => data.GenerateCertificate), { ssr: false });
 
@@ -26,8 +27,8 @@ export default function YourCertificatePage() {
         const loadCertificate = async () => {
             try {
                 setLoadingCertificate(true)
-                const createdCertifcate = await axios.get(`/api/certificate/${params?.id}`)
-                setCertificateDetails(createdCertifcate?.data?.data as OneCertificate);
+                const createdCertifcate = await apiLoadCertificateWithNumer(params?.id as string);
+                setCertificateDetails(createdCertifcate);
             } catch (error: any) {
                 console.log(error);
                 const errorData = (error)?.response?.data?.message
@@ -36,7 +37,9 @@ export default function YourCertificatePage() {
                 setLoadingCertificate(false)
             }
         }
-        loadCertificate()
+        if (params?.id) {
+            loadCertificate()
+        }
     }, [params?.id]);
 
 

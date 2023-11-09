@@ -1,20 +1,20 @@
 "use client"
 
 import { useForm, SubmitHandler } from "react-hook-form"
-import axios from 'axios';
 import { z } from 'zod'
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { getCertificateZSchema } from '@/utils/zSchema/CertificateValidations';
 import { useState } from "react";
 import { OneCertificate } from "@/utils/types/Certificate";
-import PopUpModal from "@/components/Modal/PopUpModal";
 
 import { toast } from 'react-toastify';
 import { formatDateTime } from "@/utils/helpers/dates";
 import Link from "next/link";
 import { NormalButton } from "@/components/Button/NormalButton";
 import ShareCertificateButtons from "@/components/ShareCertificate/ShareCertificate";
+import { apiLoadCertificateWithNumer } from "@/apiCalls/certificatesApi";
+import MintCertificateButton from "@/components/NftMintingButton/MintCertificateButton";
 
 
 type GetCertificateType = z.infer<typeof getCertificateZSchema>
@@ -24,25 +24,24 @@ export default function Home() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors, isValid, isValidating },
     reset
   } = useForm<GetCertificateType>({
     resolver: zodResolver(getCertificateZSchema)
   })
 
-  // TODO: define cer
   const [certificateDetails, setCertificateDetails] = useState<OneCertificate>();
   const [loadingCertificate, setLoadingCertificate] = useState(false);
 
 
+
+
+
   const onSubmit: SubmitHandler<GetCertificateType> = async (data) => {
-    console.log("data", data)
     try {
       setLoadingCertificate(true)
-      const createdCertifcate = await axios.get(`/api/certificate/${data?.certificateNumber}`)
-      console.log("generated", createdCertifcate);
-      setCertificateDetails(createdCertifcate?.data?.data as OneCertificate);
+      const certificate = await apiLoadCertificateWithNumer(data?.certificateNumber);
+      setCertificateDetails(certificate);
       reset()
     } catch (error: any) {
       console.log(error);
@@ -89,6 +88,7 @@ export default function Home() {
               <h1 className="text_sub_heading_size mb-2">Share Certificate</h1>
 
               <ShareCertificateButtons certificateDetails={certificateDetails} />
+              <MintCertificateButton setCertificateDetails={setCertificateDetails} certificateDetails={certificateDetails} />
             </div>
           </div>
         }

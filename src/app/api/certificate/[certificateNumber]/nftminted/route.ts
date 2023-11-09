@@ -18,7 +18,7 @@ export async function POST(req: NextRequest, { params }: { params: any }) {
         _certificate.nftMinted = true
 
         await _certificate.save();
-        return NextResponse.json({ status: true, message: "Certificate created succefully", data: _certificate }, { status: 201 })
+        return NextResponse.json({ status: true, message: "Nft Minted Seted", data: _certificate }, { status: 201 })
     } catch (error: any) {
         console.log(error);
 

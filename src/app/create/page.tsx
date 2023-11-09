@@ -14,6 +14,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { NormalButton } from '@/components/Button/NormalButton';
 import ShareCertificateButtons from '@/components/ShareCertificate/ShareCertificate';
+import { apiCreateCertificate } from '@/apiCalls/certificatesApi';
 
 
 type CreateCertificateType = z.infer<typeof createCertificateZSchema>
@@ -36,13 +37,9 @@ export default function CreateCertificate() {
   const [creatingCertificate, setCreatingCertificate] = useState(false);
 
   const onSubmit: SubmitHandler<CreateCertificateType> = async (data) => {
-    console.log("data", data)
-
     try {
       setCreatingCertificate(true);
-      const createdCertifcate = await axios.post("/api/certificate", {
-        body: data
-      })
+      const createdCertifcate = await apiCreateCertificate(data);
       if (createdCertifcate.status === 201) {
         toast.success("Certificate Created Succefully");
       } else {
