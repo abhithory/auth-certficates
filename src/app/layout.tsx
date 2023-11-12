@@ -5,10 +5,7 @@ import { ToastContainer } from 'react-toastify';
 
 import '@/styles/globals.css'
 import 'react-toastify/dist/ReactToastify.css';
-
-// import '@react-pdf-viewer/core/lib/styles/index.css';
-// import '@react-pdf-viewer/default-layout/lib/styles/index.css';
-
+import TopProgressbar from '@/components/Layouts/TopProgressbar';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -24,11 +21,15 @@ export default function RootLayout({
     <html lang="en">
 
       <body className={`bg-primary-bg text-text-color`}>
+
+
         <video className="bg-video" src="/background.mp4" autoPlay loop muted></video>
 
-        <Navbar />
+        <TopProgressbar>
+          <Navbar />
 
-        {children}
+          {children}
+        </TopProgressbar>
         <ToastContainer />
       </body>
     </html>

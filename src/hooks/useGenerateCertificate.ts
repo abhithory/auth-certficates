@@ -25,7 +25,7 @@ export function useGenerateCertificate({ certificateDetails }: GenerateCertifica
 
                 const existingPdfBytes = await fetch('/certificate.pdf').then((res) => res.arrayBuffer());
                 const pdfDoc = await PDFDocument.load(existingPdfBytes);
-                const timesRomanBoldFont = await pdfDoc.embedFont(StandardFonts.TimesRomanBold)
+                const timesRomanBoldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold)
 
 
                 const pages = pdfDoc.getPages();
@@ -36,22 +36,22 @@ export function useGenerateCertificate({ certificateDetails }: GenerateCertifica
                 const fontSize = 50;
                 const textWidth = timesRomanBoldFont.widthOfTextAtSize(certificateDetails.recipientName, fontSize);
                 const xRecipient = (width - textWidth) / 2;
-                const yRecipient = (height - fontSize) / 2;
+                const yRecipient = height * 0.44;
                 firstPage.drawText(capitalizeFirstLetter(certificateDetails.recipientName), {
                     x: xRecipient,
-                    y: yRecipient + 10,
+                    y: yRecipient,
                     size: fontSize,
                     font: timesRomanBoldFont,
-                    color: rgb(0, 0, 0),
+                    color: rgb(1, 1, 1),
                 });
 
                 const certificateNumberFontSize = 12;
-                firstPage.drawText(certificateDetails.certificateNumber, {
-                    x: width * 0.18,
-                    y: certificateNumberFontSize,
+                firstPage.drawText("Certificate No:" + certificateDetails.certificateNumber, {
+                    x: width * 0.12,
+                    y: height * 0.08,
                     size: certificateNumberFontSize,
                     font: timesRomanBoldFont,
-                    color: rgb(0, 0, 0),
+                    color: rgb(1, 1, 1),
                 });
                 const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
                 setCertificateUrl(pdfDataUri);
