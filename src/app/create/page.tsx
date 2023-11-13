@@ -92,11 +92,11 @@ export default function CreateCertificate() {
               <h1 className="text_highlight_gradient text_sub_heading_size mb-2">Share Certificate</h1>
 
               <ShareCertificateButtons certificateDetails={createdCertificate} />
-
+              {/* 
               <div className="mt-4">
 
                 <MintCertificateButton setCertificateDetails={setCreatedCertificate} certificateDetails={createdCertificate} />
-              </div>
+              </div> */}
 
             </div>
           </>
