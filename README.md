@@ -6,21 +6,15 @@ The Certificate Generation and Verification System is a web application that all
 
 ## Features
 
-- **User Registration and Authentication:** Users can register accounts on the platform with email verification and password protection.
-
 - **Certificate Generation:** Users can fill in their details to generate a certificate, choosing from predefined templates or uploading custom designs.
 
-- **PDF Certificate Download:** Generated certificates are available for download in PDF format, including user details, a unique certificate number, and a QR code.
+- **PDF Certificate Download:** Generated certificates are available for download in PDF format, including user details, a unique certificate number.
 
 - **Social Media Sharing:** Users can share certificates on social media platforms (LinkedIn, Twitter) through API integration.
 
 - **Certificate Verification:** A verification page where anyone can enter a certificate number to verify its authenticity.
 
 - **Blockchain Integration (Optional):** Integration with a blockchain for enhanced security and the possibility to mint certificates as non-fungible tokens (NFTs).
-
-- **User Dashboard:** Users have a dashboard to manage and view all their generated certificates, tracking the status of certificate verification.
-
-- **Admin Panel:** Admins can manage user accounts, certificates, and system settings, viewing analytics on platform usage.
 
 ## Tech Stack
 
