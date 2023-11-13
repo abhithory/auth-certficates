@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Certificate Generation and Verification System
 
-## Getting Started
+The Certificate Generation and Verification System is a web application that allows users to create, download, and share digital certificates. The system ensures the authenticity of the certificates through a verification process. Users can generate certificates, download them in PDF format, and share them on social media platforms.
 
-First, run the development server:
+### Project Website: [https://auth-certficates.vercel.app/](https://auth-certficates.vercel.app/)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **User Registration and Authentication:** Users can register accounts on the platform with email verification and password protection.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Certificate Generation:** Users can fill in their details to generate a certificate, choosing from predefined templates or uploading custom designs.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **PDF Certificate Download:** Generated certificates are available for download in PDF format, including user details, a unique certificate number, and a QR code.
 
-## Learn More
+- **Social Media Sharing:** Users can share certificates on social media platforms (LinkedIn, Twitter) through API integration.
 
-To learn more about Next.js, take a look at the following resources:
+- **Certificate Verification:** A verification page where anyone can enter a certificate number to verify its authenticity.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Blockchain Integration (Optional):** Integration with a blockchain for enhanced security and the possibility to mint certificates as non-fungible tokens (NFTs).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- **User Dashboard:** Users have a dashboard to manage and view all their generated certificates, tracking the status of certificate verification.
 
-## Deploy on Vercel
+- **Admin Panel:** Admins can manage user accounts, certificates, and system settings, viewing analytics on platform usage.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Tech Stack
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Frontend/Backend: Nextjs 14
+- Database: MongoDB
+- Blockchain Integration (Optional): Ethereum, Binance Smart Chain
+- UI Framework: Tailwind Css
+
+## Local Setup
+
+1. Clone the repository:
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Copy the .env.example file to .env:
+   ```bash
+   cp .env.example .env
+   ```
+4. Open the .env file and update the MONGODB_URL with your local MongoDB connection string.
+
+   ```bash
+    # MongoDB Connection URL
+   DATABASE_URL="mongodb://your-mongodb-url"
+
+   # only if you want to Allow NFT Mining
+   NEXT_PUBLIC_THIRD_WEB_CLIENT_ID="your-client-id"
+   ```
