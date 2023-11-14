@@ -7,15 +7,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { getCertificateZSchema } from '@/utils/zSchema/CertificateValidations';
 import { useState } from "react";
 import { OneCertificate } from "@/utils/types/Certificate";
-
 import { toast } from 'react-toastify';
 import { formatDateTime } from "@/utils/helpers/dates";
 import Link from "next/link";
 import { NormalButton } from "@/components/Button/NormalButton";
 import ShareCertificateButtons from "@/components/ShareCertificate/ShareCertificate";
 import { apiLoadCertificateWithNumer } from "@/apiCalls/certificatesApi";
-import MintCertificateButton from "@/components/NftMintingButton/MintCertificateButton";
-
 
 type GetCertificateType = z.infer<typeof getCertificateZSchema>
 
@@ -34,9 +31,6 @@ export default function Home() {
   const [loadingCertificate, setLoadingCertificate] = useState(false);
 
 
-
-
-
   const onSubmit: SubmitHandler<GetCertificateType> = async (data) => {
     try {
       setLoadingCertificate(true)
@@ -44,7 +38,8 @@ export default function Home() {
       setCertificateDetails(certificate);
       reset()
     } catch (error: any) {
-      console.log(error);
+      console.error(error);
+
       const errorData = (error)?.response?.data?.message
 
       toast.error(typeof errorData === "string" ? errorData : "Enter Valid Data. Something unexpted in backend")
@@ -52,9 +47,6 @@ export default function Home() {
       setLoadingCertificate(false)
     }
   }
-
-
-
 
   return (
     <main className="page_main flex_center flex-col">
@@ -79,14 +71,12 @@ export default function Home() {
             <div className="mt-4">
               <Link href={"/certificate/" + certificateDetails.certificateNumber} target="_blank">
                 <NormalButton className={`btn_primary_1`}>
-
                   View Certificate
                 </NormalButton>
               </Link>
             </div>
             <div className="mt-8">
               <h1 className="text_sub_heading_size mb-2">Share Certificate</h1>
-
               <ShareCertificateButtons certificateDetails={certificateDetails} />
             </div>
           </div>
