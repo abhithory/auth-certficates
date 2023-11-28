@@ -44,6 +44,6 @@ The Certificate Generation and Verification System is a web application that all
    NEXT_PUBLIC_THIRD_WEB_CLIENT_ID="your-client-id"
    ```
    
-![Screenshot from 2023-11-28 02-59-43](https://github.com/abhithory/auth-certficates/assets/76877003/602953e7-c5e4-4ece-a3b2-440e6e0cb926)
+![Screenshot from 2023-11-28 03-02-35](https://github.com/abhithory/auth-certficates/assets/76877003/a8cfdfe9-3cb0-4993-a498-cce0c7f9fd80)
 
 
