@@ -43,3 +43,7 @@ The Certificate Generation and Verification System is a web application that all
    # only if you want to Allow NFT Mining
    NEXT_PUBLIC_THIRD_WEB_CLIENT_ID="your-client-id"
    ```
+
+![Uploading Screenshot from 2023-11-28 02-59-43.png…]()
+
+
