@@ -43,7 +43,7 @@ The Certificate Generation and Verification System is a web application that all
    # only if you want to Allow NFT Mining
    NEXT_PUBLIC_THIRD_WEB_CLIENT_ID="your-client-id"
    ```
-
-![Uploading Screenshot from 2023-11-28 02-59-43.png…]()
+   
+![Screenshot from 2023-11-28 02-59-43](https://github.com/abhithory/auth-certficates/assets/76877003/602953e7-c5e4-4ece-a3b2-440e6e0cb926)
 
 
